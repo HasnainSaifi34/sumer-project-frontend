@@ -2,8 +2,15 @@
 
 import React from 'react';
 import styles from './page.module.css'; // Import CSS module
-
-const TableComponent:React.FC = ({obj}) => {
+interface TableComponentProps {
+  array: Array<{
+    task: string;
+    startTime: string;
+    stopTime: string;
+    totalTime: number;
+  }>;
+}
+const TableComponent:React.FC<TableComponentProps> = ({array}) => {
   
 
   return (
@@ -17,9 +24,17 @@ const TableComponent:React.FC = ({obj}) => {
             <th>Total Time (mins)</th>
             
           </tr>
+          {array.map((item, index) => (
+            <tr key={index}>
+              <td>{item.task}</td>
+              <td>{item.startTime}</td>
+              <td>{item.stopTime}</td>
+              <td>{item.totalTime}</td>
+            </tr>
+          ))}
         </thead>
         <tbody>
-
+      
           {/* Add more rows as needed */}
         </tbody>
       </table>

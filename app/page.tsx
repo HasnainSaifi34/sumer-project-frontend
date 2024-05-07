@@ -3,6 +3,7 @@ import { SyntheticEvent, useState } from "react";
 import styles from "./page.module.css";
 import Table from "./(components)/scheduletable";
 export default function Home() {
+  const [taskArray, setTaskArray]=useState([])
   const [taskObj, setTaskObj] = useState({
     task: "",
     startTime: "00:00",
@@ -56,7 +57,10 @@ export default function Home() {
     if (taskObj.task !== "") {
       if (TimeCalculator(taskObj.startTime, taskObj.stopTime)) {
         console.log("values submitted");
-        console.log(taskObj)
+        console.log(taskObj);
+  
+        setTaskArray((prevElements) => [...prevElements, taskObj]);
+        console.log(taskArray)
       } else {
         console.log("please enter valid time");
       }
@@ -64,6 +68,7 @@ export default function Home() {
       console.log("please enter a valid task");
     }
   };
+  
   return (
     <main className={styles.main}>
       <header>
@@ -71,7 +76,7 @@ export default function Home() {
       </header>
       <div className={styles.container}>
         <div className={styles.SchduleBody}>
-          <Table obj={taskObj}/>
+          <Table array={taskArray}/>
           <div className={styles.InputBody}>
             <div>
               <label>Input :</label>
