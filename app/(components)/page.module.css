@@ -1,0 +1,25 @@
+/* page.module.css */
+
+.tableContainer {
+    width: 100%;
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    
+    border: 1px solid black;
+  }
+  
+  .taskColumn {
+    background-color: #11d321;
+    color: rgb(14, 19, 16);
+  }
+  
