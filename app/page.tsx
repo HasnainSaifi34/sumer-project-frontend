@@ -60,6 +60,8 @@ export default function Home() {
         console.log(taskObj);
   
         setTaskArray((prevElements) => [...prevElements, taskObj]);
+        
+
         console.log(taskArray)
       } else {
         console.log("please enter valid time");
