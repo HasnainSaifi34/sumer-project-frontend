@@ -1,6 +1,4 @@
 // this will be pushed to git hub
-//haris kazi
-
 "use client";
 import { SyntheticEvent, useState } from "react";
 import styles from "./page.module.css";

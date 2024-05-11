@@ -7,7 +7,7 @@ interface TableComponentProps {
     task: string;
     startTime: string;
     stopTime: string;
-    totalTime: number;
+    TotalTime: number;
   }>;
 }
 const TableComponent:React.FC<TableComponentProps> = ({array}) => {
@@ -29,7 +29,7 @@ const TableComponent:React.FC<TableComponentProps> = ({array}) => {
               <td>{item.task}</td>
               <td>{item.startTime}</td>
               <td>{item.stopTime}</td>
-              <td>{item.totalTime}</td>
+              <td>{item.TotalTime}</td>
             </tr>
           ))}
         </thead>
