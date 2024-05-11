@@ -11,9 +11,10 @@ interface TableComponentProps {
   }>;
 }
 const TableComponent:React.FC<TableComponentProps> = ({array}) => {
-  
+
 
   return (
+    
     <div className={styles.tableContainer}>
       <table className={styles.table}>
         <thead>
@@ -24,7 +25,9 @@ const TableComponent:React.FC<TableComponentProps> = ({array}) => {
             <th>Total Time (mins)</th>
             
           </tr>
+
           {array.map((item, index) => (
+            
             <tr key={index}>
               <td>{item.task}</td>
               <td>{item.startTime}</td>

@@ -33,15 +33,18 @@
   align-items: center;
   background-color: #1e075f;
   color: #fff;  
-  border-radius: 2px solid black;
+  border-radius: 2px ;
+  border: 1px solid black; /* Border style added */
+  padding: 0.5vw; /* Padding added for spacing inside the container */
   gap:0.5vw;
 
 }
 .InputBody>input{
-color: #1e075f;
+background-color: #1e075f;
 border-radius: 6px solid black;
 
 }
+
 .submit{
   width: 5vw;
   height: 2vw;

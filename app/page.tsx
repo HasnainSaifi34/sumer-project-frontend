@@ -1,17 +1,29 @@
 // this will be pushed to git hub
 "use client";
-import { SyntheticEvent, useState } from "react";
+import { useState,useRef } from "react";
+import { TaskObjType } from "./types/index";
 import styles from "./page.module.css";
 import Table from "./(components)/scheduletable";
 export default function Home() {
-  const [taskArray, setTaskArray]=useState([])
-  const [taskObj, setTaskObj] = useState({
+ const [taskArray,setTaskArray] = useState<TaskObjType[]>([])
+  const [taskObj, setTaskObj] = useState<TaskObjType>({
     task: "",
     startTime: "00:00",
     stopTime: "00:00",
     TotalTime: 0,
   });
-  const TimeCalculator = (start: string, stop: string) => {
+
+  const UpdateTaskObjTotalTime = async (TotalTime: number) => {
+    await new Promise((res, rej) => {
+      setTaskObj((prevObj) => {
+        return {
+          ...prevObj,
+          TotalTime: TotalTime,
+        };
+      });
+    });
+  };
+  const TimeCalculator = async (start: string, stop: string) => {
     if (start !== "00:00" && stop !== "00:00") {
       const StopHour = parseInt(stop.split(":")[0]);
       const StopMin = parseInt(stop.split(":")[1]);
@@ -19,17 +31,18 @@ export default function Home() {
       const StartMin = parseInt(start.split(":")[1]);
 
       const value = StopHour * 60 + StopMin - (StartHour * 60 + StartMin);
-      setTaskObj((prevTaskObj) => {
-        return {
-          ...prevTaskObj,
-          TotalTime: value,
-        };
-      });
-      return true;
+      try {
+        await UpdateTaskObjTotalTime(value);
+        return true;
+      } catch (e) {
+        console.warn(`There was an error updating Total Time: ${e}`);
+        return false;
+      }
     } else {
       return false;
     }
   };
+
   const onChangeFunc = (e, type: string) => {
     setTaskObj((prevTaskObj) => {
       switch (type) {
@@ -52,26 +65,26 @@ export default function Home() {
           return prevTaskObj;
       }
     });
-    console.log(taskObj);
   };
-  const OnSubMitFunc = () => {
+  window.Getter = () => {
+    return { taskObj: taskObj, taskArray: taskArray };
+  };
+  const SubmitTaskObj = async () => {
+    console.log(taskObj.task !== "")
     if (taskObj.task !== "") {
-      if (TimeCalculator(taskObj.startTime, taskObj.stopTime)) {
-        console.log("values submitted");
-        console.log(taskObj);
-  
-        setTaskArray((prevElements) => [...prevElements, taskObj]);
-        
-
-        console.log(taskArray)
-      } else {
-        console.log("please enter valid time");
-      }
+      await TimeCalculator(taskObj.startTime, taskObj.stopTime);
     } else {
       console.log("please enter a valid task");
     }
   };
-  
+
+  const OnSubMitFunc=async()=>{
+    await SubmitTaskObj()
+    setTaskArray((prevElem) => [...prevElem, taskObj])
+
+  }
+
+
   return (
     <main className={styles.main}>
       <header>
@@ -79,7 +92,7 @@ export default function Home() {
       </header>
       <div className={styles.container}>
         <div className={styles.SchduleBody}>
-          <Table array={taskArray}/>
+          <Table array={taskArray} />
           <div className={styles.InputBody}>
             <div>
               <label>Input :</label>
@@ -100,7 +113,17 @@ export default function Home() {
               />
             </div>
             <div>
-              <button className={styles.submit} onClick={OnSubMitFunc}>Submit</button>
+              <button className={styles.submit} onClick={OnSubMitFunc}>
+                Submit
+              </button>
+            </div>
+            <div>
+              <button
+                className={styles.submit}
+                onClick={() => setTaskArray([])}
+              >
+                Clear
+              </button>
             </div>
           </div>
         </div>
